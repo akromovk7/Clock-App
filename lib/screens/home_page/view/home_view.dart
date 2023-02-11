@@ -1,10 +1,39 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:clock_app/core/base/size_extension.dart';
 import 'package:clock_app/core/constants/const_route.dart';
+import 'package:clock_app/core/constants/image_const.dart';
 import 'package:clock_app/service/navigation_service.dart';
 import 'package:flutter/material.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   const HomeView({super.key});
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  AdaptiveThemeMode? themeMode;
+
+  Future<void> _getMode() async {
+    themeMode = await AdaptiveTheme.getThemeMode();
+    setState(() {});
+  }
+
+  Future<void> _switchTheme() async {
+    if (themeMode!.isDark) {
+      AdaptiveTheme.of(context).setLight();
+    } else {
+      AdaptiveTheme.of(context).setDark();
+    }
+    await _getMode();
+  }
+
+  @override
+  void initState() {
+    _getMode();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +47,8 @@ class HomeView extends StatelessWidget {
             image: DecorationImage(
                 image: AssetImage(
                   Theme.of(context).scaffoldBackgroundColor == Colors.white
-                      ? "assets/images/background.png"
-                      : "assets/images/background_light.png",
+                      ? AppImages.background
+                      : AppImages.backgroundLight,
                 ),
                 fit: BoxFit.cover),
           ),
@@ -27,15 +56,14 @@ class HomeView extends StatelessWidget {
             children: [
               Center(
                 child: Container(
-                  margin: EdgeInsets.only(
-                      bottom: context.height * 0.17),
+                  margin: EdgeInsets.only(bottom: context.height * 0.17),
                   height: context.height * 0.6,
                   width: context.width * 0.8,
                   decoration: BoxDecoration(
                     color: Colors.transparent,
-                    border:
-                        Border.all(color: Theme.of(context).cardColor, width: 2),
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    border: Border.all(
+                        color: Theme.of(context).cardColor, width: 2),
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
                   ),
                 ),
               ),
@@ -45,9 +73,7 @@ class HomeView extends StatelessWidget {
                   SizedBox(
                     height: context.height * 0.2,
                     width: context.width * 0.2,
-                    child: Image.asset(
-                      "assets/images/gerb.png",
-                    ),
+                    child: Image.asset(AppImages.gerb),
                   ),
                   SizedBox(height: context.height * 0.01),
                   Text(
@@ -70,7 +96,7 @@ class HomeView extends StatelessWidget {
                       SizedBox(
                         height: context.height * 0.2,
                         width: context.width * 0.4,
-                        child: Image.asset("assets/images/partly_cloudy.png"),
+                        child: Image.asset(AppImages.partlyCloudy),
                       ),
                       Column(
                         children: [
@@ -89,9 +115,12 @@ class HomeView extends StatelessWidget {
                 ],
               ),
               IconButton(
-                icon: Icon(Icons.settings),
-                onPressed: () {
-                  NavigationService.instance.pushNamed(routeName: settingsPage);
+                icon: Icon(
+                    Theme.of(context).scaffoldBackgroundColor == Colors.white
+                        ? Icons.dark_mode_outlined
+                        : Icons.light_mode_outlined),
+                onPressed: () async {
+                  await _switchTheme();
                 },
               ),
             ],

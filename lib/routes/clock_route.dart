@@ -1,6 +1,5 @@
 import 'package:clock_app/core/constants/const_route.dart';
 import 'package:clock_app/screens/home_page/view/home_view.dart';
-import 'package:clock_app/screens/settings_page/view/settings_view.dart';
 import 'package:flutter/material.dart';
 
 class MyRoute {
@@ -13,8 +12,6 @@ class MyRoute {
     switch (settings.name) {
       case homePage:
         return easynavigate(HomeView());
-      case settingsPage:
-        return easynavigate(SettingsView());
     }
   }
 
