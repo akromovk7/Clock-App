@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:clock_app/core/base/size_extension.dart';
 import 'package:clock_app/core/constants/image_const.dart';
+import 'package:clock_app/screens/home_page/widgets/time_widget.dart';
 import 'package:flutter/material.dart';
 
 final _widthThreshold = 600.0;
@@ -88,13 +89,8 @@ class _HomeViewState extends State<HomeView> {
               Positioned(
                 left: isTablet ? context.width * 0.17 : context.width * 0.165,
                 top: isTablet ? context.height * 0.23 : context.height * 0.22,
-                child: Text(
-                  isTablet ? '21 : 15' : '11 : 27',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline1!
-                      .copyWith(fontSize: isTablet ? 160 : 90),
-                ),
+                child: TimeInHourAndMinute(isTablet: isTablet,),
+                
               ),
               SizedBox(height: context.height * 0.01),
               Positioned(
