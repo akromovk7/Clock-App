@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:clock_app/core/base/size_extension.dart';
 import 'package:clock_app/core/constants/image_const.dart';
+import 'package:clock_app/screens/home_page/widgets/time_formatter.dart';
 import 'package:clock_app/screens/home_page/widgets/time_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +17,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   AdaptiveThemeMode? themeMode;
+  DateTime date = DateTime.now();
 
   Future<void> _getMode() async {
     themeMode = await AdaptiveTheme.getThemeMode();
@@ -95,17 +97,25 @@ class _HomeViewState extends State<HomeView> {
               SizedBox(height: context.height * 0.01),
               Positioned(
                 left: isTablet ? context.width * 0.6 : context.width * 0.25,
-                top: isTablet ? context.height * 0.235 : context.height * 0.4,
+                top: isTablet ? context.height * 0.245 : context.height * 0.4,
                 child: Text(
-                  "12 май",
+                  TimeUtils.formatToMyTimeDay(date),
                   style: Theme.of(context).textTheme.headline2,
                 ),
               ),
               Positioned(
-                left: isTablet ? context.width * 0.6 : context.width * 0.2,
+                left: isTablet ? context.width * 0.65 : context.width * 0.37,
+                top: isTablet ? context.height * 0.245 : context.height * 0.4,
+                child: Text(
+                  TimeUtils.formatToMyTimeWeek(date),
+                  style: Theme.of(context).textTheme.headline2,
+                ),
+              ),
+              Positioned(
+                left: isTablet ? context.width * 0.6 : context.width * 0.22,
                 top: isTablet ? context.height * 0.33 : context.height * 0.5,
                 child: Text(
-                  "Сешанба",
+                  TimeUtils.formatToMyTimeMonth(date),
                   style: Theme.of(context).textTheme.headline3,
                 ),
               ),

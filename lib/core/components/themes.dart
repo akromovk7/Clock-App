@@ -23,7 +23,7 @@ class AllTheme {
     splashColor: Colors.grey.shade300,
     textTheme: TextTheme(
       headline1: const TextStyle(color: Color(0xFF0465DA),fontSize: 90,fontWeight: FontWeight.bold),
-      headline2: const TextStyle(color: Color(0XFF717171),fontSize: 60,fontWeight: FontWeight.bold),
+      headline2: const TextStyle(color: Color(0XFF717171),fontSize: 40,fontWeight: FontWeight.bold),
       headline3: const TextStyle(color: Color(0XFF717171),fontSize: 60,fontWeight: FontWeight.w300),
       headline4: const TextStyle(color: Color(0XFF000000),fontSize: 80,fontWeight: FontWeight.w300),
       headline5: const TextStyle(color: Color(0XFF000000),fontSize: 35,fontWeight: FontWeight.normal),
@@ -50,7 +50,7 @@ class AllTheme {
     textSelectionTheme: const TextSelectionThemeData(cursorColor: Colors.white),
     textTheme: TextTheme(
       headline1: const TextStyle(color: Color(0xFFFFFFFF),fontSize: 90,fontWeight: FontWeight.bold),
-      headline2: const TextStyle(color: Color(0XFFFFFFFF),fontSize: 60,fontWeight: FontWeight.bold),
+      headline2: const TextStyle(color: Color(0XFFFFFFFF),fontSize: 40,fontWeight: FontWeight.bold),
       headline3: const TextStyle(color: Color(0XFFFFFFFF),fontSize: 60,fontWeight: FontWeight.w300),
       headline4: const TextStyle(color: Color(0XFFFFFFFF),fontSize: 80,fontWeight: FontWeight.w300),
       headline5: const TextStyle(color: Color(0XFFFFFFFF),fontSize: 35,fontWeight: FontWeight.normal),
