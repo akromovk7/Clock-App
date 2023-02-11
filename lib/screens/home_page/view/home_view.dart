@@ -1,12 +1,13 @@
+import 'dart:ui';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:clock_app/core/base/size_extension.dart';
-import 'package:clock_app/core/constants/const_route.dart';
 import 'package:clock_app/core/constants/image_const.dart';
-import 'package:clock_app/service/navigation_service.dart';
 import 'package:flutter/material.dart';
 
+final _widthThreshold = 600.0;
+
 class HomeView extends StatefulWidget {
-  const HomeView({super.key});
+  HomeView({super.key});
 
   @override
   State<HomeView> createState() => _HomeViewState();
@@ -37,11 +38,14 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    final size = window.physicalSize / window.devicePixelRatio;
+    final width = context.width;
+    final isTablet = width > _widthThreshold;
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Container(
-          // height: context.height,
+          height: context.height,
           width: context.width,
           decoration: BoxDecoration(
             image: DecorationImage(
@@ -50,78 +54,106 @@ class _HomeViewState extends State<HomeView> {
                       ? AppImages.background
                       : AppImages.backgroundLight,
                 ),
-                fit: BoxFit.cover),
+                fit: isTablet ? BoxFit.contain : BoxFit.cover),
           ),
           child: Stack(
             children: [
               Center(
                 child: Container(
-                  margin: EdgeInsets.only(bottom: context.height * 0.17),
-                  height: context.height * 0.6,
+                  margin: EdgeInsets.only(
+                      bottom: isTablet
+                          ? context.height * 0.29
+                          : context.height * 0.17),
+                  height:
+                      isTablet ? context.height * 0.5 : context.height * 0.6,
                   width: context.width * 0.8,
                   decoration: BoxDecoration(
                     color: Colors.transparent,
                     border: Border.all(
-                        color: Theme.of(context).cardColor, width: 2),
+                        color: Theme.of(context).cardColor,
+                        width: isTablet ? 4 : 2),
                     borderRadius: const BorderRadius.all(Radius.circular(10)),
                   ),
                 ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: context.height * 0.2,
-                    width: context.width * 0.2,
-                    child: Image.asset(AppImages.gerb),
-                  ),
-                  SizedBox(height: context.height * 0.01),
-                  Text(
-                    '11 : 27',
-                    style: Theme.of(context).textTheme.headline1,
-                  ),
-                  SizedBox(height: context.height * 0.01),
-                  Text(
-                    "12 май",
-                    style: Theme.of(context).textTheme.headline2,
-                  ),
-                  Text(
-                    "Сешанба",
-                    style: Theme.of(context).textTheme.headline3,
-                  ),
-                  const Spacer(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      SizedBox(
-                        height: context.height * 0.2,
-                        width: context.width * 0.4,
-                        child: Image.asset(AppImages.partlyCloudy),
-                      ),
-                      Column(
-                        children: [
-                          Text(
-                            "+27°",
-                            style: Theme.of(context).textTheme.headline4,
-                          ),
-                          Text(
-                            "Тошкент",
-                            style: Theme.of(context).textTheme.headline5,
-                          )
-                        ],
-                      )
-                    ],
-                  )
-                ],
+              Positioned(
+                left: isTablet ? context.width * 0.4 : context.width * 0.4,
+                child: SizedBox(
+                  height: context.height * 0.2,
+                  width: context.width * 0.2,
+                  child: Image.asset(AppImages.gerb),
+                ),
               ),
-              IconButton(
-                icon: Icon(
-                    Theme.of(context).scaffoldBackgroundColor == Colors.white
-                        ? Icons.dark_mode_outlined
-                        : Icons.light_mode_outlined),
-                onPressed: () async {
-                  await _switchTheme();
-                },
+              SizedBox(height: context.height * 0.01),
+              Positioned(
+                left: isTablet ? context.width * 0.17 : context.width * 0.165,
+                top: isTablet ? context.height * 0.23 : context.height * 0.22,
+                child: Text(
+                  isTablet ? '21 : 15' : '11 : 27',
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline1!
+                      .copyWith(fontSize: isTablet ? 160 : 90),
+                ),
+              ),
+              SizedBox(height: context.height * 0.01),
+              Positioned(
+                left: isTablet ? context.width * 0.6 : context.width * 0.25,
+                top: isTablet ? context.height * 0.235 : context.height * 0.4,
+                child: Text(
+                  "12 май",
+                  style: Theme.of(context).textTheme.headline2,
+                ),
+              ),
+              Positioned(
+                left: isTablet ? context.width * 0.6 : context.width * 0.2,
+                top: isTablet ? context.height * 0.33 : context.height * 0.5,
+                child: Text(
+                  "Сешанба",
+                  style: Theme.of(context).textTheme.headline3,
+                ),
+              ),
+              const Spacer(),
+              Positioned(
+                left: isTablet ? context.width * 0.15 : context.width * 0.12,
+                top: isTablet ? context.height * 0.65 : context.height * 0.675,
+                child: SizedBox(
+                  height:
+                      isTablet ? context.height * 0.15 : context.height * 0.3,
+                  width: isTablet ? context.width * 0.15 : context.width * 0.3,
+                  child: Image.asset(AppImages.partlyCloudy),
+                ),
+              ),
+              Positioned(
+                left: isTablet ? context.width * 0.4 : context.width * 0.5,
+                top: isTablet ? context.height * 0.68 : context.height * 0.7,
+                child: Text(
+                  "+27°",
+                  style: Theme.of(context).textTheme.headline4,
+                ),
+              ),
+              Positioned(
+                left: isTablet ? context.width * 0.6 : context.width * 0.5,
+                top: isTablet ? context.height * 0.7 : context.height * 0.83,
+                child: Text(
+                  "Тошкент",
+                  style: Theme.of(context).textTheme.headline5,
+                ),
+              ),
+              Positioned(
+                left: isTablet ? context.width * 0.85 : context.width * 0.0,
+                top: isTablet ? context.height * 0.8 : context.height * 0.0,
+                child: IconButton(
+                  icon: Icon(
+                      Theme.of(context).scaffoldBackgroundColor == Colors.white
+                          ? Icons.dark_mode_outlined
+                          : Icons.light_mode_outlined,
+                      size: isTablet ? 45 : 30,
+                      color: Theme.of(context).cardColor),
+                  onPressed: () async {
+                    await _switchTheme();
+                  },
+                ),
               ),
             ],
           ),
